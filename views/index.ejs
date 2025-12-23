@@ -1,0 +1,54 @@
+ <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%= pageTitle %></title>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.2/dist/cdn.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
+    </head>
+    <body>
+        <h1><%= message %></h1>
+        <p>This content is rendered using EJS. enter user first name and last name</p>
+        <div x-data="submit">
+            <input type="text" x-model="firstname" placeholder="First Name">
+            <input type="text" x-model="lastname" placeholder="Last Name">
+            <button @click.prevent="sub">Submit</button>
+
+         <script>
+            // More JavaScript code can go here
+            // console.log('Alpine.js is loaded and ready to use!', Alpine);
+            document.addEventListener('alpine:init', () => {
+                console.log('Alpine.js is loaded and ready to use!', Alpine);
+                // Alpine.data(...)
+                Alpine.data('submit', () => ({
+                    firstname: "",
+                    lastname: "",
+                    async sub() {
+                        if(this.firstname === "" || this.lastname === "") {
+                            alert("Please fill in both fields.");
+                            return;
+                        }
+                        try {
+                            let first = this.firstname;
+                            let last = this.lastname;
+                            const response = await axios.post('/submit/user',{first,last}); // Call an Express API endpoint
+                            const newData = response.data;
+                            console.log('response success returned data is =>', newData);
+                            // alert(`First Name: ${this.firstname}, Last Name: ${this.lastname}`);
+                        } catch (error) {
+                            console.error('Error fetching client-side data:', error);
+                        }
+                       
+                        
+                    }
+
+        
+                    
+                }))
+            })
+
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,65 @@
+version: '3.9'
+# Use root/example as user/password credentials
+
+services:
+
+
+  # webapp:
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfile
+  #   container_name: express_js_app
+  #   env_file: ".env"
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - db
+
+  webapp:
+    container_name: express_js_app_testing
+    # image: peterincredible2/expressapp:1
+    build:
+      context: .
+      dockerfile: dockerfile
+    env_file: ".env"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - mnetwork
+
+  db:
+    container_name: mysql_db
+    image: mysql:8.0.40
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: expressejstesting
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mnetwork
+    healthcheck:
+      # Use mysqladmin to ping the database over the network interface (localhost from within the container's perspective)
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s # How often to run the check
+      timeout: 5s   # Maximum time for the command to complete
+      retries: 5    # Number of consecutive failures before marking as unhealthy
+      start_period: 20s # Grace period for the service to start up
+
+networks:
+  mnetwork:
+    driver: bridge
+
+volumes:
+    db_data:
+      driver: local
+    # (this is just an example, not intended to be a production configuration)
+
+# networks:
+#   default:
+#     driver: bridge
