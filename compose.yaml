@@ -20,7 +20,7 @@ services:
     # image: peterincredible2/expressapp:1
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: src/dockerfile
     env_file: ".env"
     ports:
       - "3000:3000"
@@ -54,7 +54,6 @@ services:
 networks:
   mnetwork:
     driver: bridge
-
 volumes:
     db_data:
       driver: local

@@ -33,6 +33,7 @@
                         try {
                             let first = this.firstname;
                             let last = this.lastname;
+                            console.log(axios,first,last);
                             const response = await axios.post('/submit/user',{first,last}); // Call an Express API endpoint
                             const newData = response.data;
                             console.log('response success returned data is =>', newData);

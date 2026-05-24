@@ -8,6 +8,7 @@ const db_pass = process.env.DB_PASS;
 const db_name = process.env.DB_NAME;
 //databae sequilize setup
 const { Sequelize,DataTypes } = require('sequelize');
+console.log("password = >"+db_pass);
 const sequelize = new Sequelize(db_name, db_user, db_pass, {
   host: db_host,
   dialect: 'mysql',/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
@@ -49,9 +50,9 @@ const User = sequelize.define(
   await sequelize.authenticate();
   await sequelize.sync();
   console.log('Connection has been established successfully again.');
-  console.error("sequelize config property",sequelize.config.port,sequelize.config.host,sequelize.config.database);
+  console.error("sequelize config property",sequelize.config.port,sequelize.config.host,sequelize.config.database,sequelize.config.password);
 } catch (error) {
-  console.error("sequelize config property",sequelize.config.port,sequelize.config.host,sequelize.config.database);
+  console.error("sequelize config property",sequelize.config.port,sequelize.config.host,sequelize.config.database,sequelize.config.password);
   console.error('Unable to connect to the database:2', error);
 }
 })();
