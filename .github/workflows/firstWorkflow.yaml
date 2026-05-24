@@ -27,4 +27,21 @@ jobs:
           echo "ID=${{ github.sha }}" > temp.env
           cat temp.env
 
-   
+  deploy-to-ec2-instance:
+    needs: Explore-GitHub-Actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/gh_action_first_docker_cicd_pipeline
+            docker compose down
+            echo "ID=${{ github.sha }}" > temp.env
+            docker pull peterincredible2/test_express_app:${{ github.sha }}
+            sudo docker compose --env-file temp.env up

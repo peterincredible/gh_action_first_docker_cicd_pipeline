@@ -18,8 +18,8 @@ services:
   webapp:
     container_name: express_js_app_testing
     build:
-      context: .
-      dockerfile: src/dockerfile
+      context: ./src
+      dockerfile: dockerfile
     env_file: ".env"
     ports:
       - "3000:3000"
