@@ -1,0 +1,15 @@
+name: automatically build and deploy my docker image to dockerhub
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+  push:
+    branches: [ main ]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+      - name: List files in the repository
+        run: |
+          ls -lah
+   
