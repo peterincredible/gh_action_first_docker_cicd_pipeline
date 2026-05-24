@@ -17,7 +17,9 @@ services:
 
   webapp:
     container_name: express_js_app_testing
-    image: peterincredible2/test_express_app:${ID}
+    build:
+      context: .
+      dockerfile: src/dockerfile
     env_file: ".env"
     ports:
       - "3000:3000"
