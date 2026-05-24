@@ -44,5 +44,5 @@ jobs:
             git pull
             docker compose down
             echo "ID=${{ github.sha }}" > temp.env
-            sudo docker pull peterincredible2/test_express_app:${{ github.sha }}
+            
             sudo docker compose --env-file temp.env up
