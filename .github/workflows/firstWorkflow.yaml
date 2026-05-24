@@ -19,7 +19,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
       - name: Build and push Docker image
         run: |
-          docker build -t peterincredible2/test_express_app:${{ github.sha }} ./src .
+          
+          docker build -t peterincredible2/test_express_app:${{ github.sha }} ./src
           docker push peterincredible2/test_express_app:${{ github.sha }}
       - name: add sha to version in the temp.env file
         run: |
