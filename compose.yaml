@@ -29,6 +29,7 @@ services:
 
   db:
     container_name: mysql_db
+    
     image: mysql:8.0.40
     restart: always
     environment:
