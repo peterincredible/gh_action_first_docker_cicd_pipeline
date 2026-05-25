@@ -22,15 +22,14 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
-      # db:
-      #   condition: service_healthy
+      db:
+        condition: service_healthy
     networks:
       - mnetwork
 
   db:
     container_name: mysql_db
-
+    
     image: mysql:8.0.40
     restart: always
     environment:
@@ -42,13 +41,13 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - mnetwork
-    # healthcheck:
-    #   # Use mysqladmin to ping the database over the network interface (localhost from within the container's perspective)
-    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
-    #   interval: 10s # How often to run the check
-    #   timeout: 5s   # Maximum time for the command to complete
-    #   retries: 5    # Number of consecutive failures before marking as unhealthy
-    #   start_period: 20s # Grace period for the service to start up
+    healthcheck:
+      # Use mysqladmin to ping the database over the network interface (localhost from within the container's perspective)
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s # How often to run the check
+      timeout: 5s   # Maximum time for the command to complete
+      retries: 5    # Number of consecutive failures before marking as unhealthy
+      start_period: 20s # Grace period for the service to start up
 
 networks:
   mnetwork:
