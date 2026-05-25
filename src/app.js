@@ -64,7 +64,7 @@ app.set('views', './views')
 app.use(express.json());
 
 app.get('/', (req, res) => {
-     res.render('index', { pageTitle: 'Home Page', message: 'Welcome to EJS!' });
+     res.render('index', { pageTitle: 'Home Page', message: 'Welcome to EJS! again mid night' });
 //   res.send('Hello from Node.js and Express!');
 });
 app.post('/submit/user', (req, res) => {

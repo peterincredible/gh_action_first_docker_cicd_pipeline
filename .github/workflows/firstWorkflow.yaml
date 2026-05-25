@@ -49,4 +49,4 @@ jobs:
             echo "ID=${{ github.sha }}" > temp.env
             
             sudo docker compose --env-file temp.env up
-            sudo docker image prune 
+            sudo docker image prune -af
