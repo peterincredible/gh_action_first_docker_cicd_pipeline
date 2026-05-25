@@ -41,12 +41,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/gh_action_first_docker_cicd_pipeline
-            git fetch --all
-            git reset --hard origin/main
             git pull
-            sudo docker container prune -f
             sudo docker compose down
             echo "ID=${{ github.sha }}" > temp.env
-            
             sudo docker compose --env-file temp.env up
             sudo docker image prune -af
